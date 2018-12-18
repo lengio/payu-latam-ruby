@@ -1,0 +1,1 @@
+require "payu/version"
