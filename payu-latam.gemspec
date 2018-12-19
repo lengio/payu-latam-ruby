@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift(::File.join(::File.dirname(__FILE__), "lib"))
 
-require "payu/version"
+require "pay_u/version"
 
 Gem::Specification.new do |spec|
   spec.name = "payu-latam"

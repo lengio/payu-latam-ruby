@@ -4,7 +4,9 @@ gemspec
 
 group :development do
   gem "rake"
+
   gem "rspec"
+  gem "simplecov"
   gem "webmock"
 
   gem "byebug"
