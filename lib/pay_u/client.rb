@@ -1,8 +1,6 @@
 class PayU::Client
-  attr_accessor :key, :merchant_id
+  include Virtus.model
 
-  def initialize(key:, merchant_id:)
-    @key = key
-    @merchant_id = merchant_id
-  end
+  attribute :key, String
+  attribute :merchant_id, Integer
 end

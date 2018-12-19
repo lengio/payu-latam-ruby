@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://slangapp.com"
   spec.license = "MIT"
 
+  spec.add_dependency "virtus"
   spec.add_development_dependency "bundler", "~> 1.15"
 
   spec.files = `git ls-files`.split("\n")

@@ -1,28 +1,18 @@
 class PayU::Response
-  SIGNATURE_JOIN = "~".freeze
+  include Virtus.model
 
-  attr_reader :client, :merchant_id, :reference, :amount, :currency, :status_code, :signature
-  private :client, :signature
+  attribute :client, PayU::Client
+  attribute :order, PayU::Order
+  attribute :signature, String
 
-  def initialize(client:, params: {})
-    @client = client
-    @merchant_id = params[:merchant_id]
-    @reference = params[:reference]
-    @amount = params[:amount]
-    @currency = params[:currency]
-    @status_code = params[:status_code]
-    @signature = params[:signature]
+  def initialize(params)
+    @client = params.delete(:client)
+    @signature = params.delete(:signature)
+    @order = PayU::Order.new(params.merge(client: @client))
   end
 
 
   def valid?
-    signature == Digest::MD5.hexdigest([
-      client.key,
-      merchant_id,
-      reference,
-      format("%.1f", amount),
-      currency,
-      status_code,
-    ].join(SIGNATURE_JOIN))
+    signature == order.signature
   end
 end
