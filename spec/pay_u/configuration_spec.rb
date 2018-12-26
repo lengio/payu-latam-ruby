@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe PayU::Client do
+RSpec.describe PayU::Configuration do
   it "configures PayU with block" do
     api_key = "12345"
     PayU.configure do |config|

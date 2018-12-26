@@ -1,7 +1,6 @@
 class PayU::Response
   include Virtus.model
 
-  attribute :client, PayU::Client
   attribute :order, PayU::Order
   attribute :signature, String
 
@@ -10,8 +9,8 @@ class PayU::Response
   def initialize(params)
     @client = params.delete(:client)
     @signature = params.delete(:signature)
-    @signer = PayU::Signer::Response.new(params.merge(api_key: client.api_key))
-    @order = PayU::Order.new(params.merge(client: @client))
+    @order = PayU::Order.new(params)
+    @signer = PayU::Signer::Response.new(@order.attributes)
   end
 
 

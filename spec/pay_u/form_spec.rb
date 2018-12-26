@@ -1,11 +1,16 @@
 require "spec_helper"
 
 RSpec.describe PayU::Form do
-  # Example from http://developers.payulatam.com/es/web_checkout/integration.html
+  before do
+    PayU.configure do |config|
+      config.api_key = "4Vj8eK4rloUd272L48hsrarnUA"
+      config.account_id = "512321"
+    end
+  end
 
+  # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     order = PayU::Order.new(
-      client: client,
       merchant_id: "508029",
       reference_code: "TestPayU",
       amount: 20_000,
@@ -28,7 +33,6 @@ RSpec.describe PayU::Form do
       config.confirmation_url = confirmation_url
     end
     form = PayU::Order.new(
-      client: client,
       merchant_id: merchant_id,
       description: description,
       reference_code: "TestPayU",
@@ -43,7 +47,7 @@ RSpec.describe PayU::Form do
       "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/",
     )
     expect(form.params[:fields][:merchantId]).to eq(merchant_id)
-    expect(form.params[:fields][:accountId]).to eq(client.account_id)
+    expect(form.params[:fields][:accountId]).to eq(PayU.configuration.account_id)
     expect(form.params[:fields][:description]).to eq(description)
     expect(form.params[:fields][:amount]).to eq(amount)
     expect(form.params[:fields][:currency]).to eq(currency)
@@ -51,9 +55,5 @@ RSpec.describe PayU::Form do
     expect(form.params[:fields][:test]).to eq(1)
     expect(form.params[:fields][:responseUrl]).to eq(response_url)
     expect(form.params[:fields][:confirmationUrl]).to eq(confirmation_url)
-  end
-
-  private def client
-    PayU::Client.new(api_key: "4Vj8eK4rloUd272L48hsrarnUA", account_id: "512321")
   end
 end

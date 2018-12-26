@@ -2,8 +2,9 @@ module PayU
   class Configuration
     include Virtus.model
 
-    attribute :test, Boolean
     attribute :api_key, String
+    attribute :account_id, String
+    attribute :test, Boolean
     attribute :response_url, String
     attribute :confirmation_url, String
 

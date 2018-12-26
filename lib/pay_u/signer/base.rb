@@ -4,7 +4,6 @@ module PayU::Signer
 
     include Virtus.model
 
-    attribute :api_key, String
     attribute :merchant_id, Integer
     attribute :reference_code, String
     attribute :amount, BigDecimal
@@ -13,6 +12,11 @@ module PayU::Signer
 
     def signature
       Digest::MD5.hexdigest(fields.join(SIGNATURE_JOIN))
+    end
+
+
+    private def api_key
+      PayU.configuration.api_key
     end
   end
 end

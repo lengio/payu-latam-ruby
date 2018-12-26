@@ -1,8 +1,14 @@
 require "spec_helper"
 
 RSpec.describe PayU::Response do
-  # Example from http://developers.payulatam.com/es/web_checkout/integration.html
+  before do
+    PayU.configure do |config|
+      config.api_key = "4Vj8eK4rloUd272L48hsrarnUA"
+      config.account_id = "508028"
+    end
+  end
 
+  # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     response = PayU::Response.new(params.merge(
                                     amount: 150.25,
@@ -30,13 +36,9 @@ RSpec.describe PayU::Response do
     expect(response.valid?).to be_truthy
   end
 
-  private def client
-    PayU::Client.new(api_key: "4Vj8eK4rloUd272L48hsrarnUA", account_id: "508028")
-  end
 
   private def params
     {
-      client: client,
       merchant_id: "508029",
       reference_code: "TestPayU04",
       currency: :USD,

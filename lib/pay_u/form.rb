@@ -7,7 +7,7 @@ class PayU::Form
 
   def initialize(params)
     super(params)
-    @signer = PayU::Signer::Form.new(order.attributes.merge(api_key: order.client.api_key))
+    @signer = PayU::Signer::Form.new(order.attributes)
   end
 
 

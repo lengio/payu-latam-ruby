@@ -7,7 +7,6 @@ class PayU::Order
   EXPIRED = 5
   PENDING = 7
 
-  attribute :client, PayU::Client
   attribute :merchant_id, Integer
   attribute :reference_code, String
   attribute :amount, BigDecimal
@@ -17,14 +16,18 @@ class PayU::Order
   attribute :tax, BigDecimal
   attribute :tax_return_base, BigDecimal
 
-
   def initialize(params)
     super(params)
   end
 
 
+  def api_key
+    PayU.configuration.api_key
+  end
+
+
   def account_id
-    client.account_id
+    PayU.configuration.account_id
   end
 
 
