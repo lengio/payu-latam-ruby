@@ -1,6 +1,6 @@
 class PayU::Client
   include Virtus.model
 
-  attribute :key, String
-  attribute :merchant_id, Integer
+  attribute :api_key, String
+  attribute :account_id, Integer
 end

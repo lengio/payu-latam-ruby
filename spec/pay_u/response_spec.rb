@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe PayU::Client do
+RSpec.describe PayU::Response do
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
 
   it "validates signature" do
@@ -31,17 +31,16 @@ RSpec.describe PayU::Client do
   end
 
   private def client
-    PayU::Client.new(key: "4Vj8eK4rloUd272L48hsrarnUA", merchant_id: "508029")
+    PayU::Client.new(api_key: "4Vj8eK4rloUd272L48hsrarnUA", account_id: "508028")
   end
 
   private def params
     {
       client: client,
       merchant_id: "508029",
-      reference: "TestPayU04",
+      reference_code: "TestPayU04",
       currency: "USD",
       status_code: 6,
-      signature: "779f163be9347a691bcdb25064644795",
     }
   end
 end

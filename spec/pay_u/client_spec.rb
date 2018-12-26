@@ -2,11 +2,11 @@ require "spec_helper"
 
 RSpec.describe PayU::Client do
   it "creates client" do
-    key = "12345"
-    merchant_id = 67_890
-    client = PayU::Client.new(key: key, merchant_id: merchant_id)
+    api_key = "12345"
+    account_id = 67_890
+    client = PayU::Client.new(api_key: api_key, account_id: account_id)
 
-    expect(client.key).to eq(key)
-    expect(client.merchant_id).to eq(merchant_id)
+    expect(client.api_key).to eq(api_key)
+    expect(client.account_id).to eq(account_id)
   end
 end
