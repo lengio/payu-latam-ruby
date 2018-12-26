@@ -7,7 +7,7 @@ RSpec.describe PayU::Confirmation do
     response = PayU::Confirmation.new(params.merge(
                                         reference_code: "TestPayU04",
                                         amount: 150.00,
-                                        status_code: 6,
+                                        status_code: PayU::Order::DECLINED,
                                         signature: "df67936f918887b2aa31688a77a10fe1",
                                       ))
 
@@ -18,7 +18,7 @@ RSpec.describe PayU::Confirmation do
     response = PayU::Confirmation.new(params.merge(
                                         reference_code: "TestPayU05",
                                         amount: 150.26,
-                                        status_code: 4,
+                                        status_code: PayU::Order::APPROVED,
                                         signature: "1d95778a651e11a0ab93c2169a519cd6",
                                       ))
 

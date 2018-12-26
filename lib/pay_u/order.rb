@@ -1,6 +1,12 @@
 class PayU::Order
   include Virtus.model
 
+  APPROVED = 4
+  DECLINED = 6
+  ERROR = 104
+  EXPIRED = 5
+  PENDING = 7
+
   attribute :client, PayU::Client
   attribute :account_id, Integer
   attribute :merchant_id, Integer
