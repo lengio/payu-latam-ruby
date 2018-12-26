@@ -1,17 +1,38 @@
 class PayU::Form
   include Virtus.model
 
-  attribute :client, PayU::Client
   attribute :order, PayU::Order
 
+  attr_reader :signer
+
   def initialize(params)
-    @client = params.delete(:client)
-    signer = PayU::Signer::Form.new(params.merge(api_key: client.api_key))
-    @order = PayU::Order.new(params.merge(client: @client), signer)
+    super(params)
+    @signer = PayU::Signer::Form.new(order.attributes.merge(api_key: order.client.api_key))
   end
 
 
   def signature
-    order.signature
+    signer.signature
+  end
+
+
+  def params
+    {
+      action: order.test? ? PayU::TEST_URL : PayU::LIVE_URL,
+      fields: {
+        merchantId: order.merchant_id,
+        accountId: order.account_id,
+        description: order.description,
+        referenceCode: order.reference_code,
+        amount: order.amount,
+        tax: order.tax,
+        taxReturnBase: order.tax_return_base,
+        currency: order.currency,
+        signature: signature,
+        test: order.test? ? 1 : 0,
+        responseUrl: order.response_url,
+        confirmationUrl: order.confirmation_url,
+      },
+    }
   end
 end

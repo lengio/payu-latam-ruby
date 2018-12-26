@@ -39,7 +39,7 @@ RSpec.describe PayU::Response do
       client: client,
       merchant_id: "508029",
       reference_code: "TestPayU04",
-      currency: "USD",
+      currency: :USD,
       status_code: PayU::Order::DECLINED,
     }
   end

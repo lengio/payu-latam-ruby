@@ -72,7 +72,7 @@ Metrics/ParameterLists:
   Max: 5
 
 Metrics/BlockLength:
-  Max: 25
+  Max: 50
 
 Metrics/MethodLength:
   Max: 50

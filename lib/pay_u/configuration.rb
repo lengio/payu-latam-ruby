@@ -4,6 +4,12 @@ module PayU
 
     attribute :test, Boolean
     attribute :api_key, String
+    attribute :response_url, String
+    attribute :confirmation_url, String
+
+    def test?
+      test
+    end
   end
 
   def self.configuration
