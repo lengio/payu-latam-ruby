@@ -4,6 +4,7 @@ gemspec
 
 group :development do
   gem "rspec"
+  gem "rspec_junit_formatter"
   gem "coveralls", require: false
   gem "simplecov", require: false
   gem "webmock"
