@@ -4,14 +4,14 @@ RSpec.describe PayU::Form do
   before do
     PayU.configure do |config|
       config.api_key = "4Vj8eK4rloUd272L48hsrarnUA"
-      config.account_id = "512321"
+      config.merchant_id = 508_029
     end
   end
 
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     order = PayU::Order.new(
-      merchant_id: "508029",
+      account_id: 512_326,
       reference_code: "TestPayU",
       amount: 20_000,
       currency: :COP,
@@ -23,7 +23,7 @@ RSpec.describe PayU::Form do
   it "generates params" do
     response_url = "http://www.test.com/response"
     confirmation_url = "http://www.test.com/confirmation"
-    merchant_id = 508_029
+    account_id = 512_321
     description = "Test PAYU"
     amount = 20_000
     currency = :COP
@@ -33,7 +33,7 @@ RSpec.describe PayU::Form do
       config.confirmation_url = confirmation_url
     end
     form = PayU::Order.new(
-      merchant_id: merchant_id,
+      account_id: account_id,
       description: description,
       reference_code: "TestPayU",
       amount: amount,
@@ -46,8 +46,8 @@ RSpec.describe PayU::Form do
     expect(form.params[:action]).to eq(
       "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/",
     )
-    expect(form.params[:fields][:merchantId]).to eq(merchant_id)
-    expect(form.params[:fields][:accountId]).to eq(PayU.configuration.account_id)
+    expect(form.params[:fields][:merchantId]).to eq(PayU.configuration.merchant_id)
+    expect(form.params[:fields][:accountId]).to eq(account_id)
     expect(form.params[:fields][:description]).to eq(description)
     expect(form.params[:fields][:amount]).to eq(amount)
     expect(form.params[:fields][:currency]).to eq(currency)

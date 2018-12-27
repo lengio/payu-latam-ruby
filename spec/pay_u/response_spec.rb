@@ -4,7 +4,7 @@ RSpec.describe PayU::Response do
   before do
     PayU.configure do |config|
       config.api_key = "4Vj8eK4rloUd272L48hsrarnUA"
-      config.account_id = "508028"
+      config.merchant_id = 508_029
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe PayU::Response do
 
   private def params
     {
-      merchant_id: "508029",
+      account_id: 508_028,
       reference_code: "TestPayU04",
       currency: :USD,
       status_code: PayU::Order::DECLINED,

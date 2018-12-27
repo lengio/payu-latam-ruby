@@ -3,7 +3,7 @@ module PayU
     include Virtus.model
 
     attribute :api_key, String
-    attribute :account_id, String
+    attribute :merchant_id, String
     attribute :test, Boolean
     attribute :response_url, String
     attribute :confirmation_url, String

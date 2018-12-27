@@ -1,3 +1,5 @@
+require "digest"
+
 module PayU::Signer
   class Base
     SIGNATURE_JOIN = "~".freeze

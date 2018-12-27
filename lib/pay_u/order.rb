@@ -7,7 +7,7 @@ class PayU::Order
   EXPIRED = 5
   PENDING = 7
 
-  attribute :merchant_id, Integer
+  attribute :account_id, Integer
   attribute :reference_code, String
   attribute :amount, BigDecimal
   attribute :currency, Symbol
@@ -26,8 +26,8 @@ class PayU::Order
   end
 
 
-  def account_id
-    PayU.configuration.account_id
+  def merchant_id
+    PayU.configuration.merchant_id
   end
 
 
@@ -48,5 +48,10 @@ class PayU::Order
 
   def form
     @form ||= PayU::Form.new(order: self)
+  end
+
+
+  def attributes
+    super.merge(merchant_id: merchant_id)
   end
 end
