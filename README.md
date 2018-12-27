@@ -1,5 +1,8 @@
 # PayU Latam Ruby Library
 
+[![CircleCI](https://circleci.com/gh/lengio/payu-latam-ruby.svg?style=svg)](https://circleci.com/gh/lengio/payu-latam-ruby)
+[![Coverage Status](https://coveralls.io/repos/github/lengio/payu-latam-ruby/badge.svg?branch=master)](https://coveralls.io/github/lengio/payu-latam-ruby?branch=master)
+
 ## Installation
 
     gem build payu-latam.gemspec
