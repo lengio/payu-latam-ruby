@@ -1,5 +1,13 @@
 require "simplecov"
+require "coveralls"
+
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter,
+]
+
 SimpleCov.start
+Coveralls.wear!
 
 require "pry"
 require "bundler/setup"

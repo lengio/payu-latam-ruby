@@ -4,7 +4,8 @@ gemspec
 
 group :development do
   gem "rspec"
-  gem "simplecov"
+  gem "coveralls", require: false
+  gem "simplecov", require: false
   gem "webmock"
 
   gem "byebug"
