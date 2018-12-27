@@ -5,6 +5,9 @@
 
 ## Installation
 
+    gem "payu-latam", github: "lengio/payu-latam-ruby", require: "pay_u"
+
+    # Local
     gem build payu-latam.gemspec
 
 ## Usage
