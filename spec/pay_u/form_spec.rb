@@ -2,10 +2,7 @@ require "spec_helper"
 
 RSpec.describe PayU::Form do
   before do
-    PayU.configure do |config|
-      config.api_key = "4Vj8eK4rloUd272L48hsrarnUA"
-      config.merchant_id = 508_029
-    end
+    PayU.reset
   end
 
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
@@ -28,7 +25,6 @@ RSpec.describe PayU::Form do
     amount = 20_000
     currency = :COP
     PayU.configure do |config|
-      config.test = true
       config.response_url = response_url
       config.confirmation_url = confirmation_url
     end

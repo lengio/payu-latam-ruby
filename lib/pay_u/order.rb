@@ -21,11 +21,6 @@ class PayU::Order
   end
 
 
-  def api_key
-    PayU.configuration.api_key
-  end
-
-
   def merchant_id
     PayU.configuration.merchant_id
   end

@@ -1,13 +1,6 @@
 require "spec_helper"
 
 RSpec.describe PayU::Confirmation do
-  before do
-    PayU.configure do |config|
-      config.api_key = "4Vj8eK4rloUd272L48hsrarnUA"
-      config.merchant_id = 508_029
-    end
-  end
-
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     confirmation = PayU::Confirmation.new(params.merge(
