@@ -8,7 +8,7 @@ RSpec.describe PayU::Form do
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     order = PayU::Order.new(
-      account_id: 512_326,
+      account_id: PayU.configuration.account_ids[:PA],
       reference_code: "TestPayU",
       amount: 20_000,
       currency: :COP,
@@ -20,7 +20,7 @@ RSpec.describe PayU::Form do
   it "generates params" do
     response_url = "http://www.test.com/response"
     confirmation_url = "http://www.test.com/confirmation"
-    account_id = 512_321
+    account_id = PayU.configuration.account_ids[:CO]
     description = "Test PAYU"
     amount = 20_000
     currency = :COP
