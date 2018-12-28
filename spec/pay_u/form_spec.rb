@@ -48,7 +48,7 @@ RSpec.describe PayU::Form do
     expect(form.params[:fields][:amount]).to eq(amount)
     expect(form.params[:fields][:currency]).to eq(currency)
     expect(form.params[:fields][:signature]).to eq("7ee7cf808ce6a39b17481c54f2c57acc")
-    expect(form.params[:fields][:test]).to eq(1)
+    expect(form.params[:fields][:test]).to eq("1")
     expect(form.params[:fields][:responseUrl]).to eq(response_url)
     expect(form.params[:fields][:confirmationUrl]).to eq(confirmation_url)
   end

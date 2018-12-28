@@ -5,7 +5,7 @@ module PayU::Signer
         api_key,
         merchant_id,
         reference_code,
-        format("%<amount>d", amount: amount),
+        format("%<amount>g", amount: format("%<amount>f", amount: amount)),
         currency,
       ]
     end

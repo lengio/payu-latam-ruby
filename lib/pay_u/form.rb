@@ -29,7 +29,7 @@ class PayU::Form
         taxReturnBase: order.tax_return_base,
         currency: order.currency,
         signature: signature,
-        test: order.test? ? 1 : 0,
+        test: order.test? ? "1" : "0",
         responseUrl: order.response_url,
         confirmationUrl: order.confirmation_url,
       },
