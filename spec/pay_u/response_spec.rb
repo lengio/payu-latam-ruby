@@ -1,10 +1,19 @@
 require "spec_helper"
+require "fixtures/response"
 
 RSpec.describe PayU::Response do
+  it "creates object from callback" do
+    response = PayU::Response.new(Fixtures.response)
+
+    expect(response.order.reference_code).to eq(Fixtures.response[:referenceCode])
+    expect(response.order.transaction_id).to eq(Fixtures.response[:transactionId])
+    expect(response.valid?).to be_truthy
+  end
+
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     response = PayU::Response.new(params.merge(
-                                    amount: 150.25,
+                                    TX_VALUE: 150.25,
                                     signature: "00286dc735bd9eaa8ae3a3a4cbb40688",
                                   ))
 
@@ -13,7 +22,7 @@ RSpec.describe PayU::Response do
 
   it "validates signature" do
     response = PayU::Response.new(params.merge(
-                                    amount: 150.35,
+                                    TX_VALUE: 150.35,
                                     signature: "9df2bb60e2838170009040982967923f",
                                   ))
 
@@ -22,7 +31,7 @@ RSpec.describe PayU::Response do
 
   it "validates signature" do
     response = PayU::Response.new(params.merge(
-                                    amount: 150.34,
+                                    TX_VALUE: 150.34,
                                     signature: "779f163be9347a691bcdb25064644795",
                                   ))
 
@@ -33,9 +42,9 @@ RSpec.describe PayU::Response do
   private def params
     {
       account_id: 508_028,
-      reference_code: "TestPayU04",
+      referenceCode: "TestPayU04",
       currency: :USD,
-      status_code: PayU::Order::DECLINED,
+      transactionState: PayU::Order::DECLINED,
     }
   end
 end

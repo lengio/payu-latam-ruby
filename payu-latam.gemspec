@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = PayU::VERSION
   spec.required_ruby_version = ">= 2.1.0"
   spec.summary = "Ruby bindings for the PayU Latam API"
-  spec.description = "Receive payments with PayU Latam: http://developerspec.payulatam.com/es/."
+  spec.description = "Accept payments with PayU Latam: http://developerspec.payulatam.com/es/."
   spec.author = "Slang"
   spec.email = "engineering@slang.com"
   spec.homepage = "https://slangapp.com"

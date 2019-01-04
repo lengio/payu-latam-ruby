@@ -1,13 +1,22 @@
 require "spec_helper"
+require "fixtures/confirmation"
 
 RSpec.describe PayU::Confirmation do
+  it "creates object from callback" do
+    confirmation = PayU::Confirmation.new(Fixtures.confirmation)
+
+    expect(confirmation.order.reference_code).to eq(Fixtures.confirmation[:reference_sale])
+    expect(confirmation.order.transaction_id).to eq(Fixtures.confirmation[:transaction_id])
+    expect(confirmation.valid?).to be_truthy
+  end
+
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     confirmation = PayU::Confirmation.new(params.merge(
-                                            reference_code: "TestPayU04",
-                                            amount: 150.00,
-                                            status_code: PayU::Order::DECLINED,
-                                            signature: "df67936f918887b2aa31688a77a10fe1",
+                                            reference_sale: "TestPayU04",
+                                            value: "150.00",
+                                            state_pol: PayU::Order::DECLINED,
+                                            sign: "df67936f918887b2aa31688a77a10fe1",
                                           ))
 
     expect(confirmation.valid?).to be_truthy
@@ -15,21 +24,19 @@ RSpec.describe PayU::Confirmation do
 
   it "validates signature" do
     confirmation = PayU::Confirmation.new(params.merge(
-                                            reference_code: "TestPayU05",
-                                            amount: 150.26,
-                                            status_code: PayU::Order::APPROVED,
-                                            signature: "1d95778a651e11a0ab93c2169a519cd6",
+                                            reference_sale: "TestPayU05",
+                                            value: "150.26",
+                                            state_pol: PayU::Order::APPROVED,
+                                            sign: "1d95778a651e11a0ab93c2169a519cd6",
                                           ))
 
     expect(confirmation.valid?).to be_truthy
   end
-
 
   private def params
     {
       account_id: 508_028,
       currency: :USD,
-      status_code: 6,
     }
   end
 end
