@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/lengio/payu-latam-ruby.svg?style=svg)](https://circleci.com/gh/lengio/payu-latam-ruby)
 [![Coverage Status](https://coveralls.io/repos/github/lengio/payu-latam-ruby/badge.svg?branch=master)](https://coveralls.io/github/lengio/payu-latam-ruby?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/28162c8ec3dfe0ec4227/maintainability)](https://codeclimate.com/github/lengio/payu-latam-ruby/maintainability)
 
 ## Installation
 
