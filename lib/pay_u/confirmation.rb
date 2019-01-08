@@ -1,6 +1,8 @@
 class PayU::Confirmation
   include Virtus.model
 
+  EVENT = "payu.confirmation".freeze
+
   attribute :order, PayU::Order
   attribute :signature, String
 

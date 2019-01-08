@@ -1,6 +1,8 @@
 class PayU::Response
   include Virtus.model
 
+  EVENT = "payu.response".freeze
+
   attribute :order, PayU::Order
   attribute :signature, String
 
