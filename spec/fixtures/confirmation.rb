@@ -64,5 +64,5 @@ module Fixtures
       attempts: "1",
       exchange_rate: "2874.01",
     }
- end
+  end
 end

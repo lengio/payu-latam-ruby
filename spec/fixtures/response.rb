@@ -42,5 +42,5 @@ module Fixtures
       trazabilityCode: "CRED - 666934642",
       polTransactionState: "4",
     }
- end
+  end
 end
