@@ -24,6 +24,9 @@ RSpec.describe PayU::Form do
     description = "Test PAYU"
     amount = 20_000
     currency = :COP
+    extra1 = "extra1"
+    extra2 = "extra2"
+    extra3 = "extra3"
     PayU.configure do |config|
       config.response_url = response_url
       config.confirmation_url = confirmation_url
@@ -36,6 +39,9 @@ RSpec.describe PayU::Form do
       currency: currency,
       tax: 3_193,
       tax_return_base: 16_806,
+      extra_1: extra1,
+      extra_2: extra2,
+      extra_3: extra3,
     ).form
 
     expect(form.params).to be_a(Hash)
@@ -51,5 +57,8 @@ RSpec.describe PayU::Form do
     expect(form.params[:fields][:test]).to eq("1")
     expect(form.params[:fields][:responseUrl]).to eq(response_url)
     expect(form.params[:fields][:confirmationUrl]).to eq(confirmation_url)
+    expect(form.params[:fields][:extra1]).to eq(extra1)
+    expect(form.params[:fields][:extra2]).to eq(extra2)
+    expect(form.params[:fields][:extra3]).to eq(extra3)
   end
 end

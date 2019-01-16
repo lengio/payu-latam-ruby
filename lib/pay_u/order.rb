@@ -19,6 +19,9 @@ class PayU::Order
   attribute :payment_method_code, Integer
   attribute :email, String
   attribute :transaction_id, String
+  attribute :extra_1, String
+  attribute :extra_2, String
+  attribute :extra_3, String
 
   def initialize(params)
     super(params)

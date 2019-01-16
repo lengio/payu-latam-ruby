@@ -19,6 +19,9 @@ class PayU::Confirmation
       payment_method_code: params[:payment_method_type].to_i,
       email: params[:email_buyer],
       transaction_id: params[:transaction_id],
+      extra_1: params[:extra1],
+      extra_2: params[:extra2],
+      extra_3: params[:extra3],
     )
     @signer = PayU::Signer::Confirmation.new(@order.attributes)
   end

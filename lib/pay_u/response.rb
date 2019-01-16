@@ -19,6 +19,9 @@ class PayU::Response
       payment_method_code: params[:polPaymentMethodType].to_i,
       email: params[:buyerEmail],
       transaction_id: params[:transactionId],
+      extra_1: params[:extra1],
+      extra_2: params[:extra2],
+      extra_3: params[:extra3],
     )
     @signer = PayU::Signer::Response.new(@order.attributes)
   end

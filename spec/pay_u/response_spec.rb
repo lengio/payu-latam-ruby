@@ -5,8 +5,12 @@ RSpec.describe PayU::Response do
   it "creates object from callback" do
     response = PayU::Response.new(Fixtures.response)
 
+    expect(response.order.amount).to eq(Fixtures.response[:TX_VALUE].to_f)
     expect(response.order.reference_code).to eq(Fixtures.response[:referenceCode])
     expect(response.order.transaction_id).to eq(Fixtures.response[:transactionId])
+    expect(response.order.extra_1).to eq(Fixtures.response[:extra1])
+    expect(response.order.extra_2).to eq(Fixtures.response[:extra2])
+    expect(response.order.extra_3).to eq(Fixtures.response[:extra3])
     expect(response.valid?).to be_truthy
   end
 
