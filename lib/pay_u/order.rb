@@ -56,4 +56,29 @@ class PayU::Order
   def attributes
     super.merge(merchant_id: merchant_id)
   end
+
+
+  def approved?
+    status_code == APPROVED
+  end
+
+
+  def declined?
+    status_code == DECLINED
+  end
+
+
+  def error?
+    status_code == ERROR
+  end
+
+
+  def pending?
+    status_code == PENDING
+  end
+
+
+  def expired?
+    status_code == EXPIRED
+  end
 end
