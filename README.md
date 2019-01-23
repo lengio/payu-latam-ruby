@@ -18,7 +18,7 @@ require "pay_u"
 
 PayU.configure do |config|
   config.api_key = "4Vj8eK4rloUd272L48hsrarnUA" # Replace with your own API key
-  config.merchant_id = 508029 # Replace with your own merchant ID
+  config.merchant_id = 508_029 # Replace with your own merchant ID
   config.test = true # Test mode
 end
 
@@ -30,6 +30,12 @@ order = PayU::Order.new(
 
 order.form.params
 ```
+
+## Sandbox
+
+- Sandbox endpoint
+- Test mode in your account
+- Test param in params
 
 ## Testing
 
