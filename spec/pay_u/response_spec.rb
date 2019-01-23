@@ -10,6 +10,7 @@ RSpec.describe PayU::Response do
     expect(response.order.reference_code).to eq(Fixtures.response[:referenceCode])
     expect(response.order.transaction_id).to eq(Fixtures.response[:transactionId])
     expect(response.order.response_message).to eq("APPROVED")
+    expect(response.order.payment_method).to eq("VISA")
     expect(response.order.extra_1).to eq(Fixtures.response[:extra1])
     expect(response.order.extra_2).to eq(Fixtures.response[:extra2])
     expect(response.order.extra_3).to eq(Fixtures.response[:extra3])

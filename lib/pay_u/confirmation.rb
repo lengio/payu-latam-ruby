@@ -17,6 +17,7 @@ class PayU::Confirmation
       status_code: params[:state_pol].to_i,
       response_code: params[:response_code_pol].to_i,
       response_message: params[:response_message_pol],
+      payment_method: params[:payment_method_name],
       payment_method_code: params[:payment_method_type].to_i,
       email: params[:email_buyer],
       transaction_id: params[:transaction_id],

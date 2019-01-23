@@ -17,6 +17,7 @@ class PayU::Order
   attribute :status_code, Integer
   attribute :response_code, Integer
   attribute :response_message, String
+  attribute :payment_method, String
   attribute :payment_method_code, Integer
   attribute :email, String
   attribute :transaction_id, String
