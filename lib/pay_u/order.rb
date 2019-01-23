@@ -16,12 +16,14 @@ class PayU::Order
   attribute :tax_return_base, BigDecimal
   attribute :status_code, Integer
   attribute :response_code, Integer
+  attribute :response_message, String
   attribute :payment_method_code, Integer
   attribute :email, String
   attribute :transaction_id, String
   attribute :extra_1, String
   attribute :extra_2, String
   attribute :extra_3, String
+  attribute :cc_number, String
 
   def initialize(params)
     super(params)

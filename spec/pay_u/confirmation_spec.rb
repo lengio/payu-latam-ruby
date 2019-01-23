@@ -5,9 +5,11 @@ RSpec.describe PayU::Confirmation do
   it "creates object from callback" do
     confirmation = PayU::Confirmation.new(Fixtures.confirmation)
 
+    expect(confirmation.order.approved?).to be_truthy
     expect(confirmation.order.amount).to eq(Fixtures.confirmation[:value].to_f)
     expect(confirmation.order.reference_code).to eq(Fixtures.confirmation[:reference_sale])
     expect(confirmation.order.transaction_id).to eq(Fixtures.confirmation[:transaction_id])
+    expect(confirmation.order.response_message).to eq("APPROVED")
     expect(confirmation.order.extra_1).to eq(Fixtures.confirmation[:extra1])
     expect(confirmation.order.extra_2).to eq(Fixtures.confirmation[:extra2])
     expect(confirmation.order.extra_3).to eq(Fixtures.confirmation[:extra3])
