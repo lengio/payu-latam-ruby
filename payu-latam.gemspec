@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://slangapp.com"
   spec.license = "MIT"
 
-  spec.add_dependency "faraday", "~> 0.15.4"
+  spec.add_dependency "faraday", "~> 0.15"
   spec.add_dependency "virtus", "~> 1.0"
 
   spec.add_development_dependency "bundler", "~> 1.15"
