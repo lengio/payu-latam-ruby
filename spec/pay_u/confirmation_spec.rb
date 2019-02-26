@@ -1,5 +1,4 @@
 require "spec_helper"
-require "fixtures/confirmation"
 
 RSpec.describe PayU::Confirmation do
   it "creates object from callback" do

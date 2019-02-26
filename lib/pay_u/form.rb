@@ -18,7 +18,7 @@ class PayU::Form
 
   def params
     {
-      action: order.test? ? PayU::TEST_URL : PayU::LIVE_URL,
+      action: PayU.configuration.webcheckout_url,
       fields: {
         merchantId: order.merchant_id,
         accountId: order.account_id,

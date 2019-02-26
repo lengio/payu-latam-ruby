@@ -1,5 +1,4 @@
 require "spec_helper"
-require "fixtures/response"
 
 RSpec.describe PayU::Response do
   it "creates object from callback" do

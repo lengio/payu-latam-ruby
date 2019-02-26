@@ -13,6 +13,8 @@ require "pry"
 require "bundler/setup"
 require "pay_u"
 
+Dir["./spec/fixtures/*"].each { |fixture| require fixture }
+
 if ENV["CIRCLE_ARTIFACTS"]
   dir = File.join(ENV["CIRCLE_ARTIFACTS"], "coverage")
   SimpleCov.coverage_dir(dir)

@@ -1,10 +1,6 @@
 require "spec_helper"
 
 RSpec.describe PayU::Form do
-  before do
-    PayU.reset
-  end
-
   # Example from http://developers.payulatam.com/es/web_checkout/integration.html
   it "validates signature" do
     order = PayU::Order.new(
