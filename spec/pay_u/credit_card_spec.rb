@@ -1,6 +1,14 @@
 require "spec_helper"
 
 RSpec.describe PayU::CreditCard do
+  before(:all) do
+    stub_request(:post, /#{PayU::Customer::ENDPOINT}$/)
+      .to_return(body: File.new("./spec/fixtures/responses/customer.json"))
+
+    stub_request(:post, %r{#{PayU::Customer::ENDPOINT}/.+/creditCards})
+      .to_return(body: {token: SecureRandom.uuid}.to_json)
+  end
+
   it "creates credit card token" do
     customer = PayU::Customer.create(
       name: "Sample User Name",

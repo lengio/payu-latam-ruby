@@ -1,0 +1,29 @@
+{
+  "id": "44f09r1p5561",
+  "plan": {
+    "id": "6da3e0b5-cfb6-430d-93ef-f654eda54e16",
+    "planCode": "9e6abf9549366e52",
+    "description": "Plan",
+    "accountId": "512321",
+    "intervalCount": 1,
+    "interval": "MONTH",
+    "additionalValues": [
+      { "name": "PLAN_TAX_RETURN_BASE", "value": 0, "currency": "COP" },
+      { "name": "PLAN_TAX", "value": 0, "currency": "COP" },
+      { "name": "PLAN_VALUE", "value": 20000, "currency": "COP" }
+    ]
+  },
+  "customer": {
+    "id": "4ef0aqk8kipn",
+    "fullName": "Sample User Name",
+    "email": "sample@sample.com",
+    "creditCards": [{ "token": "db092e5e-65aa-48c6-92b1-1b2581e93015" }]
+  },
+  "quantity": "1",
+  "installments": "1",
+  "currentPeriodStart": 1551243600000,
+  "currentPeriodEnd": 1553662799000,
+  "immediatePayment": true,
+  "deliveryAddress": {},
+  "notifyUrl": "https://example.com"
+}

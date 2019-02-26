@@ -1,6 +1,14 @@
 require "spec_helper"
 
 RSpec.describe PayU::CreditCard do
+  before do
+    stub_request(:post, /#{PayU::Subscription::ENDPOINT}/)
+      .to_return(body: File.new("./spec/fixtures/responses/subscription.json"))
+
+    stub_request(:post, /#{PayU::Plan::ENDPOINT}/)
+      .to_return(body: File.new("./spec/fixtures/responses/plan.json"))
+  end
+
   context "new plan" do
     it "creates subscripition" do
       subscription = PayU::Subscription.create(

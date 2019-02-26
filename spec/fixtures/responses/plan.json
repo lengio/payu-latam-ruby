@@ -1,0 +1,18 @@
+{
+  "id": "0bbc2f6c-c12e-41a3-b261-60fc83014fe1",
+  "planCode": "{{code}}",
+  "description": "Plan",
+  "accountId": "512321",
+  "intervalCount": 1,
+  "interval": "MONTH",
+  "maxPaymentsAllowed": 12,
+  "maxPaymentAttempts": 0,
+  "paymentAttemptsDelay": 1,
+  "maxPendingPayments": 0,
+  "trialDays": 0,
+  "additionalValues": [
+    { "name": "PLAN_TAX", "value": 0, "currency": "COP" },
+    { "name": "PLAN_VALUE", "value": 20000, "currency": "COP" },
+    { "name": "PLAN_TAX_RETURN_BASE", "value": 0, "currency": "COP" }
+  ]
+}

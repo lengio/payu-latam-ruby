@@ -2,7 +2,7 @@ class PayU::Plan
   include Virtus.model
   include PayU::Resource
 
-  ENDPOINT = "/rest/v#{PayU::API_VERSION}/plans".freeze
+  ENDPOINT = "rest/v#{PayU::API_VERSION}/plans".freeze
 
   attribute :id, String
   attribute :code, String

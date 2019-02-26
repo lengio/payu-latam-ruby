@@ -2,7 +2,7 @@ class PayU::CreditCard
   include Virtus.model
   include PayU::Resource
 
-  ENDPOINT = "/rest/v#{PayU::API_VERSION}/creditCards".freeze
+  ENDPOINT = "rest/v#{PayU::API_VERSION}/creditCards".freeze
 
   attribute :token, String
   attribute :name, String
@@ -33,7 +33,7 @@ class PayU::CreditCard
 
 
   def create_url
-    raise StandardError, "Some error" unless customer_id
+    raise StandardError, "Missing customer id" unless customer_id
 
     "#{PayU::Customer::ENDPOINT}/#{customer_id}/creditCards"
   end

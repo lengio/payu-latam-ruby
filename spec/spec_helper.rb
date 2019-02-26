@@ -1,5 +1,6 @@
 require "simplecov"
 require "coveralls"
+require "webmock/rspec"
 
 SimpleCov.formatters = [
   SimpleCov::Formatter::HTMLFormatter,
@@ -13,7 +14,7 @@ require "pry"
 require "bundler/setup"
 require "pay_u"
 
-Dir["./spec/fixtures/*"].each { |fixture| require fixture }
+Dir["./spec/fixtures/*.rb"].each { |fixture| require fixture }
 
 if ENV["CIRCLE_ARTIFACTS"]
   dir = File.join(ENV["CIRCLE_ARTIFACTS"], "coverage")
