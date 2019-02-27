@@ -35,15 +35,15 @@ class PayU::Client
 
 
   private def process_response(response)
-    unless response.success?
-      raise StandardError, "Unauthorized" if response.status == 401
-      raise StandardError, response.body
-    end
+    raise PayU::UnauthorizedError, "Unauthorized" if !response.success? && response.status == 401
 
     body = JSON.parse(response.body)
 
     unless response.success?
-      raise StandardError, body["errorList"] ? body["errorList"].join : body["description"]
+      error_message = body["errorList"] ? body["errorList"].join : body["description"]
+
+      raise PayU::NotFoundError, error_message if response.status == 404
+      raise PayU::Error, error_message
     end
 
     body

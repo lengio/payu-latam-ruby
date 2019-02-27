@@ -37,6 +37,6 @@ RSpec.describe PayU::Plan do
   it "raises when trying to retrieve non-existent plan" do
     expect do
       PayU::Plan.retrieve("non-existent")
-    end.to raise_exception(StandardError, /Subscription plan not found/)
+    end.to raise_exception(PayU::NotFoundError, /Subscription plan not found/)
   end
 end
