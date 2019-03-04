@@ -15,6 +15,7 @@ RSpec.describe PayU::CreditCard do
       )
 
       expect(subscription.id).not_to be_nil
+      expect(subscription.customer.name).to eq(customer_params[:name])
       expect(subscription.customer.email).to eq(customer_params[:email])
       expect(subscription.plan.code).to eq(plan_params[:code])
     end
@@ -26,6 +27,7 @@ RSpec.describe PayU::CreditCard do
       subscription = PayU::Subscription.create(subscription_params.merge(plan: {code: plan.code}))
 
       expect(subscription.id).not_to be_nil
+      expect(subscription.customer.name).to eq(customer_params[:name])
       expect(subscription.customer.email).to eq(customer_params[:email])
       expect(subscription.plan.code).to eq(plan.code)
     end

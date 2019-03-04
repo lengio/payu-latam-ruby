@@ -12,6 +12,8 @@ class PayU::Customer
   def self.new_from_api(params)
     customer = super(params)
 
+    customer.name = params["fullName"]
+
     if params["creditCards"]
       customer.credit_cards = params["creditCards"].map do |credit_card|
         PayU::CreditCard.new_from_api(credit_card)

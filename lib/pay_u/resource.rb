@@ -54,9 +54,9 @@ module PayU::Resource
       resource = new
 
       resource.attributes = params.inject({}) do |memo, (key, value)|
-        local_key = key.underscore.to_s
+        local_key = key.to_underscore.to_sym
 
-        memo.merge(local_key => value) if key.underscore
+        resource.respond_to?(local_key) ? memo.merge(local_key => value) : memo
       end
 
       resource
