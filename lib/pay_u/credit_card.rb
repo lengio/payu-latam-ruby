@@ -27,11 +27,6 @@ class PayU::CreditCard
   end
 
 
-  def assign_extra_fields(response)
-    self.token = response["token"]
-  end
-
-
   def create_url
     raise StandardError, "Missing customer id" unless customer_id
 

@@ -1,6 +1,7 @@
 module Fixtures
   def self.plan
     {
+      account_id: 512_321,
       code: SecureRandom.hex(8),
       description: "Plan",
       interval: "MONTH",

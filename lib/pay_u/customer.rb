@@ -9,16 +9,24 @@ class PayU::Customer
   attribute :email, String
   attribute :credit_cards, Array[PayU::CreditCard]
 
+  def self.new_from_api(params)
+    customer = super(params)
+
+    if params["creditCards"]
+      customer.credit_cards = params["creditCards"].map do |credit_card|
+        PayU::CreditCard.new_from_api(credit_card)
+      end
+    end
+
+    customer
+  end
+
+
   def to_params
     {
       fullName: name,
       email: email,
       creditCards: credit_cards.map(&:to_params),
     }
-  end
-
-
-  def assign_extra_fields(response)
-    self.id = response["id"]
   end
 end

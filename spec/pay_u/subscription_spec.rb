@@ -2,20 +2,21 @@ require "spec_helper"
 
 RSpec.describe PayU::CreditCard do
   before do
-    stub_request(:post, /#{PayU::Subscription::ENDPOINT}/)
-      .to_return(body: File.new("./spec/fixtures/responses/subscription.json"))
+    stub_subscription_request
 
-    stub_request(:post, /#{PayU::Plan::ENDPOINT}/)
-      .to_return(body: File.new("./spec/fixtures/responses/plan.json"))
+    stub_plan_request
   end
 
   context "new plan" do
     it "creates subscripition" do
+      plan_params = Fixtures.plan
       subscription = PayU::Subscription.create(
-        subscription_params.merge(plan: Fixtures.plan),
+        subscription_params.merge(plan: plan_params),
       )
 
       expect(subscription.id).not_to be_nil
+      expect(subscription.customer.email).to eq(customer_params[:email])
+      expect(subscription.plan.code).to eq(plan_params[:code])
     end
   end
 
@@ -25,6 +26,8 @@ RSpec.describe PayU::CreditCard do
       subscription = PayU::Subscription.create(subscription_params.merge(plan: {code: plan.code}))
 
       expect(subscription.id).not_to be_nil
+      expect(subscription.customer.email).to eq(customer_params[:email])
+      expect(subscription.plan.code).to eq(plan.code)
     end
   end
 
@@ -35,11 +38,15 @@ RSpec.describe PayU::CreditCard do
       trial_days: 0,
       immediate_payment: true,
       notify_url: "https://example.com",
-      customer: {
-        name: "Sample User Name",
-        email: "sample@sample.com",
-        credit_cards: credit_cards_params,
-      },
+      customer: customer_params,
+    }
+  end
+
+  private def customer_params
+    {
+      name: "Sample User Name",
+      email: "sample@sample.com",
+      credit_cards: credit_cards_params,
     }
   end
 

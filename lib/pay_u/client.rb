@@ -13,24 +13,45 @@ class PayU::Client
   end
 
 
-  def get(url, headers: {})
+  def get(url)
     response = @client.get do |request|
       request.url "payments-api/#{url}"
-      request.headers = request.headers.merge(default_headers).merge(headers)
+      request.headers = request.headers.merge(default_headers)
     end
 
     process_response(response)
   end
 
 
-  def post(url, params: {}, headers: {})
+  def post(url, params: {})
     response = @client.post do |request|
       request.url "payments-api/#{url}"
-      request.headers = request.headers.merge(default_headers).merge(headers)
+      request.headers = request.headers.merge(default_headers)
       request.body = params.delete_if { |_key, value| value.nil? }.to_json
     end
 
     process_response(response)
+  end
+
+
+  def put(url, params: {})
+    response = @client.put do |request|
+      request.url "payments-api/#{url}"
+      request.headers = request.headers.merge(default_headers)
+      request.body = params.delete_if { |_key, value| value.nil? }.to_json
+    end
+
+    process_response(response)
+  end
+
+
+  def delete(url)
+    response = @client.delete do |request|
+      request.url "payments-api/#{url}"
+      request.headers = request.headers.merge(default_headers)
+    end
+
+    response.success?
   end
 
 

@@ -4,10 +4,18 @@ module PayU::Resource
   end
 
 
-  def save; end
+  def save
+    return update if id
+
+    self.attributes = self.class.create(attributes).attributes
+
+    true
+  end
 
 
-  def delete; end
+  def delete
+    self.class.client.delete url
+  end
 
 
   def create_url
@@ -15,8 +23,24 @@ module PayU::Resource
   end
 
 
-  def identifier
+  def to_update_params
+    to_params
+  end
+
+
+  private def update
+    response = self.class.client.put url, params: to_update_params
+    self.attributes = attributes.merge(self.class.new_from_api(response).attributes)
+  end
+
+
+  private def identifier
     id
+  end
+
+
+  private def url
+    "#{self.class::ENDPOINT}/#{identifier}"
   end
 
 
@@ -26,20 +50,32 @@ module PayU::Resource
     end
 
 
-    def retrieve(identifier)
-      response = client.get "#{self::ENDPOINT}/#{identifier}", headers: {}
+    def new_from_api(params)
+      resource = new
 
-      new(response)
+      resource.attributes = params.inject({}) do |memo, (key, value)|
+        local_key = key.underscore.to_s
+
+        memo.merge(local_key => value) if key.underscore
+      end
+
+      resource
+    end
+
+
+    def retrieve(identifier)
+      response = client.get "#{self::ENDPOINT}/#{identifier}"
+
+      new_from_api(response)
     end
 
 
     def create(params)
       resource = new(params)
 
-      response = client.post resource.create_url, params: resource.to_params, headers: {}
-      resource.assign_extra_fields(response)
+      response = client.post resource.create_url, params: resource.to_params
 
-      resource
+      new_from_api(response)
     end
   end
 end

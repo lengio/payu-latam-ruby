@@ -15,6 +15,7 @@ require "bundler/setup"
 require "pay_u"
 
 Dir["./spec/fixtures/*.rb"].each { |fixture| require fixture }
+Dir["./spec/helpers/*.rb"].each { |fixture| require fixture }
 
 if ENV["CIRCLE_ARTIFACTS"]
   dir = File.join(ENV["CIRCLE_ARTIFACTS"], "coverage")
@@ -31,4 +32,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include Helpers
 end

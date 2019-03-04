@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe PayU::Plan do
-  before(:each) do
+  before do
     stub_request(:any, /#{PayU::Plan::ENDPOINT}/)
       .to_return do |request|
         code = if request.method == :post
@@ -34,9 +34,31 @@ RSpec.describe PayU::Plan do
     expect(found_plan.id).to match(plan.id)
   end
 
-  it "raises when trying to retrieve non-existent plan" do
+  it "updates plan" do
+    WebMock.disable!
+    plan = PayU::Plan.create(Fixtures.plan)
+    id = plan.id
+    description = "Description"
+
+    plan.description = description
+    plan.save
+
+    expect(plan.id).to eq(id)
+    expect(plan.description).to eq(description)
+
+    WebMock.enable!
+  end
+
+  it "deletes plan" do
+    WebMock.disable!
+    plan = PayU::Plan.create(Fixtures.plan)
+
+    plan.delete
+
     expect do
-      PayU::Plan.retrieve("non-existent")
+      PayU::Plan.retrieve(plan.code)
     end.to raise_exception(PayU::NotFoundError, /Subscription plan not found/)
+
+    WebMock.enable!
   end
 end

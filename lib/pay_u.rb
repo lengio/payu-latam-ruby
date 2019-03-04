@@ -7,6 +7,7 @@ require "pay_u/version"
 require "pay_u/constants"
 require "pay_u/configuration"
 require "pay_u/errors"
+require "pay_u/util/string"
 
 require "pay_u/signer/base"
 require "pay_u/signer/form"

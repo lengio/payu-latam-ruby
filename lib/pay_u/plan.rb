@@ -4,6 +4,7 @@ class PayU::Plan
 
   ENDPOINT = "rest/v#{PayU::API_VERSION}/plans".freeze
 
+  attribute :account_id, Integer
   attribute :id, String
   attribute :code, String
   attribute :description, String
@@ -17,9 +18,22 @@ class PayU::Plan
   attribute :data, Hash
   attribute :currency, Symbol
 
+  def self.new_from_api(params)
+    plan = super(params)
+
+    plan.code = params["planCode"]
+    plan.currency = params["additionalValues"].first["currency"].to_s
+    plan.data = params["additionalValues"].inject({}) do |memo, hash|
+      memo.merge(hash["name"].to_s => hash["value"])
+    end
+
+    plan
+  end
+
+
   def to_params
     {
-      accountId: "512321",
+      accountId: account_id,
       planCode: code,
       description: description,
       interval: interval,
@@ -33,15 +47,21 @@ class PayU::Plan
   end
 
 
-  def assign_extra_fields(response)
-    self.id = response["id"]
-    self.max_payment_attempts = response["maxPaymentAttempts"]
-    self.max_pending_payments = response["maxPendingPayments"]
-    self.trial_days = response["trialDays"]
+  def to_update_params
+    {
+      planCode: code,
+      description: description,
+      paymentAttemptsDelay: payment_attempts_delay,
+      maxPendingPayments: max_pending_payments,
+      maxPaymentAttempts: max_payment_attempts,
+      additionalValues: data.map do |name, value|
+        {name: name, value: value, currency: currency.to_s}
+      end,
+    }
   end
 
 
-  def identifier
+  private def identifier
     code
   end
 end

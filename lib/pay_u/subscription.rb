@@ -18,6 +18,21 @@ class PayU::Subscription
   attribute :plan, PayU::Plan
   attribute :customer, PayU::Customer
 
+  def self.new_from_api(params)
+    subscription = super(params)
+
+    subscription.extra_1 = params["extra1"]
+    subscription.extra_2 = params["extra2"]
+    subscription.current_period_start = Time.at(params["currentPeriodStart"] / 1000)
+    subscription.current_period_end = Time.at(params["currentPeriodEnd"] / 1000)
+
+    subscription.plan = PayU::Plan.new_from_api(params["plan"])
+    subscription.customer = PayU::Customer.new_from_api(params["customer"])
+
+    subscription
+  end
+
+
   def to_params
     {
       quantity: quantity,
@@ -34,9 +49,9 @@ class PayU::Subscription
   end
 
 
-  def assign_extra_fields(response)
-    self.id = response["id"]
-    self.current_period_start = response["currentPeriodStart"]
-    self.current_period_end = response["currentPeriodEnd"]
+  def to_update_params
+    {
+      creditCardToken: customer.credit_cards.first.token,
+    }
   end
 end
