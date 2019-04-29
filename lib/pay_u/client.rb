@@ -14,44 +14,47 @@ class PayU::Client
 
 
   def get(url)
-    response = @client.get do |request|
-      request.url "payments-api/#{url}"
-      request.headers = request.headers.merge(default_headers)
-    end
+    response = @client.get(&perform_request(url))
 
     process_response(response)
   end
 
 
   def post(url, params: {})
-    response = @client.post do |request|
-      request.url "payments-api/#{url}"
-      request.headers = request.headers.merge(default_headers)
-      request.body = params.delete_if { |_key, value| value.nil? }.to_json
-    end
+    response = @client.post(&perform_request_with_params(url, params))
 
     process_response(response)
   end
 
 
   def put(url, params: {})
-    response = @client.put do |request|
-      request.url "payments-api/#{url}"
-      request.headers = request.headers.merge(default_headers)
-      request.body = params.delete_if { |_key, value| value.nil? }.to_json
-    end
+    response = @client.put(&perform_request_with_params(url, params))
 
     process_response(response)
   end
 
 
   def delete(url)
-    response = @client.delete do |request|
+    response = @client.delete(&perform_request(url))
+
+    response.success?
+  end
+
+
+  private def perform_request(url)
+    proc do |request|
       request.url "payments-api/#{url}"
       request.headers = request.headers.merge(default_headers)
     end
+  end
 
-    response.success?
+
+  private def perform_request_with_params(url, params)
+    proc do |request|
+      request.url "payments-api/#{url}"
+      request.headers = request.headers.merge(default_headers)
+      request.body = params.delete_if { |_, value| value.nil? }.to_json
+    end
   end
 
 
@@ -60,14 +63,18 @@ class PayU::Client
 
     body = JSON.parse(response.body)
 
-    unless response.success?
-      error_message = body["errorList"] ? body["errorList"].join : body["description"]
-
-      raise PayU::NotFoundError, error_message if response.status == 404
-      raise PayU::Error, error_message
-    end
+    return raise_error(response) unless response.success?
 
     body
+  end
+
+  private def raise_error(response)
+    body = JSON.parse(response.body)
+
+    error_message = body["errorList"] ? body["errorList"].join : body["description"]
+
+    raise PayU::NotFoundError, error_message if response.status == 404
+    raise PayU::Error, error_message
   end
 
 
