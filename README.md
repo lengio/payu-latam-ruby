@@ -67,7 +67,7 @@ The base object to build a transaction.
  @tax=nil,
  @tax_return_base=nil,
  @transaction_id="957aa79c-135d-413e-b7fc-aaaa0000cccc">
- 
+
 order.form # Form object
 order.approved? # Transaction was approved
 order.declined? # Transaction was declined
@@ -85,7 +85,7 @@ A confirmation object from the confirmation Webhook (POST when transaction is fi
  @order=#<PayU::Order:0x007f95818e5c10…> # Order object
  @signature="cc3c8101113b056bc4b5b3d289dbb106", # Signature to verify
  @signer=#<PayU::Signer::Confirmation:0x007f95822e3b40…>> # Signer to verify signature
- 
+
 confirmation.valid? # Signature is valid
 ```
 
@@ -98,8 +98,25 @@ A response object from the response Webhook (GET when the user leaves the paymen
  @order=#<PayU::Order:0x007f8a33bf7e48…> # Order object
  @signature="cc3c8101113b056bc4b5b3d289dbb106", # Signature to verify
  @signer=#<PayU::Signer::Response:0x007f8a33bdf9d8…>> # Signer to verify signature
- 
+
 order.valid? # Signature is valid
+```
+
+---
+
+From here on, you can perform CRUD operations on the resources:
+
+```ruby
+plan = PayU::Plan.retrieve(…) # Read
+plan.description = "" # Modify
+plan.save # Update
+
+plan = PayU::Plan.new(…) # Initialize
+plan.save # Create
+
+plan = PayU::Plan.create(…) # Create
+
+plan.delete # Delete
 ```
 
 ### Customer
@@ -141,11 +158,44 @@ PayU::Plan.create(
 )
 ```
 
+It seems deleting a plan does not _really_ work. You cannot retrieve it after deletion, but if you try to create another plan with the same code PayU will say it already exist.
+
 ### Subscription
 
 Subscription object that ties a customer, a plan, and a credit card.
 
 ```ruby
+PayU::Subscription.create(
+  quantity: 1,
+  installments: 1,
+  trial_days: 0,
+  immediate_payment: true,
+  notify_url: 'https://example.com', # POST confirmation object
+  customer: {
+    name: "APPROVED",
+    email: "sample@sample.com",
+    credit_cards: [
+      name: "Sample User Name",
+      document: "1020304050",
+      number: "4242424242424242",
+      exp_month: 12,
+      exp_year: 20,
+      type: "VISA",
+    ],
+  },
+  plan: {
+    account_id: 512_321,
+    code: "plan-test-monthly",
+    description: "Plan Test",
+    interval: "MONTH",
+    interval_count: 1,
+    max_payments_allowed: 12,
+    payment_attempts_delay: 1,
+    data: {PLAN_VALUE: 20_000, PLAN_TAX: 0, PLAN_TAX_RETURN_BASE: 0},
+    currency: :COP,
+  }
+)
+
 #<PayU::Subscription:0x007fe0de8e4790
  @current_period_end=2019-03-26 23:59:59 -0500,
  @current_period_start=2019-02-27 00:00:00 -0500,
@@ -191,12 +241,27 @@ Subscription object that ties a customer, a plan, and a credit card.
  @trial_days=nil>
 ```
 
-
 ## Sandbox
 
-- Sandbox endpoint
-- Test mode in your account
-- Test param in params
+There are a few options to test the API, but it’s all rather confusing.
+
+### Sandbox endpoint
+
+This will allow you to make test transactions if you use the test credentials (the default on this gem). If you use your credentials it will not work.
+
+Refer to the docs for more info:
+
+[WebCheckout](http://developers.payulatam.com/es/web_checkout/sandbox.html)
+
+[API](http://developers.payulatam.com/es/api/sandbox.html)
+
+### Test param in params
+
+You need to set `test=1` in your params to be able to peform tests with the Sandbox.
+
+### Test mode in your account
+
+You can swith to test mode in your account’s dashboard. This will only let you preview the WebCheckout form but will not process any transactions.
 
 ## Testing
 
