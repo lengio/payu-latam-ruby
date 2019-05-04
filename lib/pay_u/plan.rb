@@ -22,9 +22,12 @@ class PayU::Plan
     plan = super(params)
 
     plan.code = params["planCode"]
-    plan.currency = params["additionalValues"].first["currency"].to_s
-    plan.data = params["additionalValues"].inject({}) do |memo, hash|
-      memo.merge(hash["name"].to_s => hash["value"])
+
+    if params["additionalValues"]
+      plan.currency = params["additionalValues"].first["currency"].to_s
+      plan.data = params["additionalValues"].inject({}) do |memo, hash|
+        memo.merge(hash["name"].to_s => hash["value"])
+      end
     end
 
     plan

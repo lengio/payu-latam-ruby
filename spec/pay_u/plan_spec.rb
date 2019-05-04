@@ -61,4 +61,8 @@ RSpec.describe PayU::Plan do
 
     WebMock.enable!
   end
+
+  it "creats a plan with just id" do
+    plan = PayU::Plan.new_from_api("id" => SecureRandom.uuid)
+  end
 end
